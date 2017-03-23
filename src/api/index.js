@@ -4,9 +4,6 @@ import { Router } from 'express';
 import * as http from 'http';
 import facets from './facets';
 
-import sys from 'sys';
-import exec from 'child_process';
-
 export default ({ config, db }) => {
 	let api = Router();
 
@@ -22,10 +19,10 @@ export default ({ config, db }) => {
 		let showDate = request.params.show_date;
 		if (showDate.match(/^\d{4}-\d{2}-\d{2}$/) === null) {
 			response.json(false);
+			return false;
 		}
 
 		http.get('http://phish.in/api/v1/show-on-date/' + showDate, (phishinResponse) => {
-
 			let body = '';
 
 			phishinResponse.on('data', (chunk) => {
